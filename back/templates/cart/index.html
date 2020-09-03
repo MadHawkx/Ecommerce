@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      </head>
+    <body>
+      <a href="/api/products"><h5>Add more items to cart</h5></a> 
+      <div class="container mt-4">
+      {% for message in messages %}
+      <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        {% for i in item_id%}
+        <h5>{{ i }}</h5>
+        {% endfor %}
+        <h5>Hey</h5>
+        {{ message }}
+      </div>
+    {% endfor %}
+    </div>
+<div class="container mt-5">
+
+  <br>
+  {% for item in items %}
+  <img src="{{item.1.Image.url}}" height="50px" width="50px"/>
+    <a href="/api/products/{{item.0.item.product.id}}"><p>{{item.0.item.product.name}}</p></a>
+    <p>{{item.0.item.size.size}}</p>
+    <p>{{item.0.item.color.color}}</p>   
+    <p>{{item.0.item.price}}</p>
+      <p><input type="number" value="{{item.0.quantity}}" class="qty" min="1" max="{{item.0.item.quantity}}" step="1" onchange="quantityUpdate('{{item.0.id}}',this,'{{item.0.item.quantity}}')"> <input type="submit"  class='deleteEle' id='{{item.0.id}}' value="Delete from cart"  style="float: right;">
+      <div id="notavailable_{{item.0.id}}"  style="display:none;"><span style="color: red;"> Quantity not available</span></p></div>
+
+  {% endfor %}
+  <p>{{cart.total}}</p>
+  <a class="btn btn-primary" href="/api/orders/checkout/" role="button">Proceed to Checkout</a>
+ <script>
+    const ids=[]
+   {%for item in items%}
+    console.log("{{item.0.id}}")
+    ids.push('{{item.0.id}}')
+    console.log(ids)
+   {%endfor%}
+   const removeFromCart=document.getElementsByClassName('deleteEle')
+   // const quantitySelector=document.getElementByClassName('qty')
+   function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+   function sendDeleteResponse(e){
+        (async () => {
+          let csrftoken = getCookie('csrftoken');
+          console.log(csrftoken)
+          const rawResponse = await fetch('/api/cart/remove_from_cart/', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'X-CSRFTOKEN': csrftoken
+            },
+            body: JSON.stringify({id:this.id})
+          });
+          const content = await rawResponse.json();
+          location.reload();
+          //console.log(content);
+        })();
+   }
+
+   function quantityUpdate(itemid, obj, obj1){
+        (async () => {
+          const passid=itemid
+          let qty=parseInt(obj.value)
+          let avail_qty = parseInt(obj1)
+          console.log(qty)
+          console.log(avail_qty)
+          var dis = "notavailable_"+itemid 
+          var x = document.getElementById(dis)
+          if(qty > avail_qty){
+            x.style.display = "block"
+          }else{
+            x.style.display = "none"
+          }
+
+          console.log(qty)
+          let csrftoken = getCookie('csrftoken');
+          console.log(csrftoken)
+          const rawResponse = await fetch('/api/cart/update_cart/', {
+            method: 'PUT',
+            headers: {
+              'Accept': 'application/json', 
+              'Content-Type': 'application/json',
+              'X-CSRFTOKEN': csrftoken
+            },
+            body: JSON.stringify({id:itemid,quantity:qty})
+          });
+          const content = await rawResponse.json();
+          //console.log(content);
+        })();
+   }
+
+   for(let i=0;i<removeFromCart.length;i++){
+        removeFromCart[i].addEventListener('click',sendDeleteResponse)
+   }
+//    for(let i=0;i<removeFromCart.length;i++){
+//         quantitySelector.addEventListener('onchange', quantityUpdate)
+// }
+
+</script>
+</body>
+</html>
+

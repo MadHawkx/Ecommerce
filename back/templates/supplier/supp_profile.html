@@ -1,0 +1,33 @@
+<h1>Your Profile</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ profile_form.errors }}
+    
+    {{ profile_form.form.as_p }}
+    <!-- {{ profile_form.form.name }}
+    {{ profile_form.form.name.value }} -->
+    
+   
+    <input type="submit" value='Save' />
+</form>
+
+<!-- 
+@login_required
+@allowed_users(allowed_roles=['staff'])
+def StudentUpdate(request, pk):
+    if not request.user.is_superuser:
+        return redirect('index')
+    obj = Student.objects.get(id=pk)
+    form = StudentForm(instance=obj)
+    if request.method == 'POST':
+        form = StudentForm(data=request.POST, files=request.FILES, instance=obj)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.save()
+            return redirect(reverse('student_detail'))
+    return render(request, 'catalog/form.html', locals())
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__' -->

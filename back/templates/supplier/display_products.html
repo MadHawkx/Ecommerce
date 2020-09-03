@@ -1,0 +1,85 @@
+<h1>{{supplier}}</h1>
+
+{% for contact in page_obj %}
+    {# Each "contact" is a Contact model object. #}
+    {{ contact.name|upper }}<br>
+    ...
+{% endfor %}
+
+<div class="pagination">
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+    <table border="1px solid" align="center">
+    <tr align="center">
+        <th>name</th>
+        <th>Status</th>
+        <th>size</th>
+        <th>color</th>
+        <th>category</th>
+        <th>Images</th>
+        <th>brand</th>
+        <th>description</th>
+        <th>price</th>
+        <th>quantity</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>Product History</th>
+    
+    </tr>
+    {% for pr in page_obj %}
+    <tr align="center">
+        <td>{{pr.0.product}}</td>
+        <td>{{pr.0.status}}</td>
+        <td>{{pr.0.size}}</td>
+        <td>{{pr.0.color}}</td>
+        <td>
+            {% for i in pr.1 %}
+              <ul>
+              <li>{{ i.title }}</li>
+              </ul>
+            {% endfor %}
+        </td>
+        <td>
+            {% for i in pr.2 %}
+                <img src="{{i.Image.url}}" height="100px" width="100px"/><br /><br />
+            {% endfor %}
+        </td>
+        <td>{{pr.0.product.brand}}</td>
+        <td>{{pr.0.product.description}}</td>
+        <td>{{pr.0.price}}</td>
+        <td>{{pr.0.quantity}}</td>
+
+        
+    
+        
+        
+        {% if pr.0.status == 'deleted' %}
+            <td>Cannot edit deleted Product</td>
+            <td>Cannot delete deleted Product</td>
+            <td><a href="view_history/{{pr.0.id}}">Click here to see edit history</a></td>
+        {% else %}
+            <td><a href="edit_product/{{pr.0.id}}">Click here to edit</a></td>
+            <td><a href="delete_product/{{pr.0.id}}">Click here to delete</a></td>
+            <td><a href="view_history/{{pr.0.id}}">Click here to see edit history</a></td>
+        {% endif %}
+
+    </tr>
+    {% endfor %}
+    </table><br><br>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <title>
+        Create a Form Dynamically with the JavaScript
+    </title>
+</head>
+
+<body style="text-align: center;">
+    
+    <p>
+        Click on the button to create a form dynamically
+    </p>
+    
+    <p id="GFG_DOWN"></p>
+    <form method='POST' id="form" style="text-align: center;" action="">
+        <input type="submit" onClick="fn(event)" ><br>
+        <input type="text" name='name' placeholder="Name"><br>
+        <input type="text" name='brand' placeholder="Brand"><br>
+        <input type="checkbox" name='staffrecommended' > Staff Recommended <br>
+        <input type="number" min="0" name="discount" placeholder="Discount"> <br>
+        <textarea  name='description' placeholder="Description" rows="10" cols="50"></textarea> <br>
+        <input type="text" name="category" placeholder="Category"><br>
+        <h3>Variations</h3>
+
+    </form>
+    <button onClick="GFG_Fun()"> 
+        click here 
+    </button>
+        <script>
+            var br = document.createElement("br"); 
+            var form = document.getElementById("form"); 
+            function GFG_Fun() {
+                var r=document.createElement('div')
+                r.setAttribute("class","r");
+                form.append(r)
+                var ID = document.createElement("input");
+                ID.setAttribute("type", "text");
+                ID.setAttribute("name", "size");
+                ID.setAttribute("placeholder", "Size");
+                var PWD = document.createElement("input");
+                PWD.setAttribute("type", "text");
+                PWD.setAttribute("name", "color");
+                PWD.setAttribute("placeholder", "Color");
+
+                var P = document.createElement("input");
+                P.setAttribute("type", "number");
+                P.setAttribute("min", "1");
+                P.setAttribute("name", "price");
+                P.setAttribute("placeholder", "Price");
+
+                var q = document.createElement("input");
+                q.setAttribute("type", "number");
+                q.setAttribute("name", "quantity");
+                q.setAttribute("placeholder", "Stock available");
+                
+                r.appendChild(ID); 
+                r.appendChild(PWD);
+                r.appendChild(P);
+                r.appendChild(q);
+                r.appendChild(br.cloneNode());
+            }
+            
+            function fn(event)
+            {
+                event.preventDefault()
+                var product_size_color = $('.r').map(function() {
+                    return {
+                        size: $(this).find('[name="size"]').val(),
+                        color: $(this).find('[name="color"]').val(),
+                        cost: $(this).find('[name="price"]').val(),
+                        quantity:$(this).find('[name="quantity"]').val()
+                    };
+                }).get();
+
+                var obj={
+                            name:$("[name='name'").val(),
+                            brand:$("[name='brand'").val(),
+                            category:$("[name='category'").val(),
+                            staffrecommended:$("[name='staffrecommended'").val(),
+                            description:$("[name='description'").val(),
+                            discount:$("[name='discount'").val(),
+                            'product_size_color_set':product_size_color
+
+                        }
+
+                    console.log(JSON.stringify(obj))
+                    $( "#form" ).submit(function( event) {
+                    console.log( $( this ).serializeArray() );
+                    event.preventDefault();
+                    });
+
+            }
+            
+        </script>
+</body>
+
+</html>

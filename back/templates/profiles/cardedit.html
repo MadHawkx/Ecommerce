@@ -1,0 +1,14 @@
+{% load rest_framework %}
+<html>
+    <body>
+    {% block content %}
+        <div class="container">
+            <form method="POST" action="/profile/cards/{{card.id}}">
+                {% csrf_token %}
+                {% render_form serializer %}
+                <input type="submit" value="Save">
+            </form>
+        </div>
+    {% endblock %}
+    </body>
+</html>

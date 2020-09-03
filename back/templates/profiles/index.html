@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    </head>
+    <body>
+<div class="container mt-5">
+
+    <form action="/profiles/update/" method="POST">
+        {%csrf_token%}
+    {%if profile.firstname %}
+    firstname<input type="text" name="firstname" value={{profile.firstname}}><br>
+    {%else%}
+    firstname<input type="text" name="firstname" ><br>
+    {%endif%}
+    {%if profile.lastname %}
+    lastname<input type="text" name="lastname" value={{profile.firstname}}><br>
+    {%else%}
+    lastname<input type="text" name="lastname" ><br>
+    {%endif%}
+    {%if profile.phone_number %}
+    phone no.<input type="text" name="phone_number" value={{profile.phone_number}}><br>
+    {%else%}
+    phone no.<input type="text" name="phone_number" ><br>
+    {%endif%}
+    <input type="submit" value="save" >
+    </form>
+    <script>
+
+    </script>
+
+</body>
+</html>

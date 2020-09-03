@@ -1,0 +1,31 @@
+<table border="1px solid" align="center">
+<tr align="center">
+    <th>name</th>
+    <th>size</th>
+    <th>color</th>
+    <th>category</th>
+    <th>brand</th>
+    <th>description</th>
+    <th>price</th>
+    <th>quantity</th>
+</tr>
+{% for pr in products %}
+<tr align="center">
+    <td>{{pr.0.product}}</td>
+    <td>{{pr.0.size}}</td>
+    <td>{{pr.0.color}}</td>
+    <td>
+        {% for i in pr.1 %}
+            <li>{{i.title}}</li>
+        {% endfor %}
+    </td>
+
+    <!-- <td>{{pr.0.category}}</td> -->
+
+    <td>{{pr.0.product.brand}}</td>
+    <td>{{pr.0.product.description}}</td>
+    <td>{{pr.0.price}}</td>
+    <td>{{pr.0.quantity}}</td>
+</tr>
+{% endfor %}
+</table><br><br>

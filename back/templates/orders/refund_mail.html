@@ -1,0 +1,10 @@
+{% autoescape off %}
+Refund requested by {{orderitem.order.user.email}} on ordered item with orderid {{orderitem.order.id}}
+order id:{{orderitem.order.id}}
+ordered item id:{{orderitem.id}}
+ordered product:{{orderitem.item.product.id}},{{orderitem.item.product.name}}
+ordered quantity:{{orderitem.quantity}}
+order total:{{orderitem.total}}
+ordered date:{{orderitem.order.ordered_date}}
+
+{% endautoescape %}

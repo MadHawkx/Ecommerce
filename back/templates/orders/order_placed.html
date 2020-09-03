@@ -1,0 +1,15 @@
+{% autoescape off %}
+Hi {{ user.name}},
+
+Here are your order details
+{% for item in orderitems %}
+    name : {{item.item.product.name}}
+    quantity ordered : {{item.quantity}}
+    price : {{item.item.price}}
+    size ordered : {{item.item.size}}
+    color choosen : {{item.item.color}}
+{% endfor %}
+
+Transaction Id : {{order.payment}}
+Total Amount paid : {{order.total}}
+{% endautoescape %}

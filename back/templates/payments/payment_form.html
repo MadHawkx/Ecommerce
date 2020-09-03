@@ -1,0 +1,68 @@
+{% load rest_framework %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body >
+<div class="container col-lg-8 mt-5" >
+    <form action="{{ action }}"  name="payuForm" method="POST">    
+        {% csrf_token %}        
+        <input type="hidden" name="key" value="{{ key }}" />            
+        <input type="hidden" name="hash" value="{{ hash }}"/>            
+        <input type="hidden" name="txnid" value="{{ txnid }}" />
+        <input type="hidden" name="amount" value="{{ amount }}" />
+        <input type="hidden" name="email" value="{{ email }}" />
+        <input type="hidden" name='udf1' value="{{order_id}}"/>
+        <div class="form-group "> 
+            <input id="fname" type="hidden" class="form-control" name="firstname" value="{{ firstname }}" /><br>
+        </div>
+        <input type="hidden" name="phone" value="{{ phone }}" />
+        <div class="form-group "> 
+        <input type="hidden" name="productinfo" class="form-control" value="{{ productinfo }}"/><br>
+        </div>
+        <input type="hidden" name="surl" value="{{ surl }}"/>
+        <input type="hidden" name="furl" value="{{ furl }}" />
+        <input type="hidden" name="service_provider" value="{{ service_provider }}" />
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+                <b>Amount :</b> {{amount}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+               <b>Purpose :</b> {{productinfo}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+                Email : {{email}}
+            </div>
+        </div>            
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+                Mobile : {{phone_number}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+                Transaction ID : {{txnid}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12" style="padding-bottom:20px;padding-top:20px;">
+                After clicking 'Pay Now' button, you will be redirected to PayUMoney Secure Gateway.
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-12 col-sm-12">
+                <input type="submit" class="btn btn-success btn-sm" value="Pay Now">
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

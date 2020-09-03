@@ -1,0 +1,53 @@
+{% load rest_framework %}
+<html>
+    <head>
+        <meta charset="utf-8">
+           <title></title>
+           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   </head>
+    <body>
+    <h1 style="text-align: center;">Checkout Page</h1>
+    <div class="container mt-5 ml-auto mr-auto">
+    <div class="card-deck">
+    
+    {%for add in customer.address.all%}
+        <div class="col-12 col-md-4">
+        <div class="card">
+        <div class="card-body">
+        <form method="POST" action="/api/orders/next/">
+        <input name='address.id' value='{{add.id}}' readonly hidden>
+        <p>Locality: <input name='address.locality' value='{{add.locality}}' readonly></p>
+        <p>Landmark: <input name='address.landmark' value='{{add.landmark}}' readonly></p>
+        <p>District: <input name='address.district' value='{{add.district}}' readonly></p>
+        <p>State: <input name='address.state' value='{{add.state}}' readonly></p>
+        <p>Pincode: <input name='address.pincode' value='{{add.pincode}}' readonly></p>
+        <p>Select any one of the following</p>
+            <input type="radio" name='payment.method' value="COD" required>Cash on Delivery<br>
+            <input type="radio" name='payment.method' value="OP">Online Payment<br>
+          {%csrf_token%}
+        <input type="submit" value="Select Address">
+    </form>
+        </div>
+        </div>
+        </div>
+    {%endfor%}
+        </div>
+    <div class="container col-lg-8">
+            <form action="/api/orders/next/" method="POST">
+                {% csrf_token %}
+                {% render_form serializer %}
+                <p>Select any one of the following</p>
+                <input type="radio" name='payment.method' value="COD" required>  Cash on Delivery<br>
+                <input type="radio" name='payment.method' value="OP">  Online Payment<br><br>
+                <input type='submit' class="btn btn-primary" >
+            </form>
+    </div>
+    <script>
+    </script>
+    </body>
+</html>
+{% comment %} 
+card No: 4012001037141112
+CVV : 123
+Exp date: 08/20 
+{% endcomment %}

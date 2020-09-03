@@ -1,0 +1,8 @@
+<h1>Login</h1>
+<form method="POST">
+    {% csrf_token %}
+    {{ sup_login.errors }}
+    {{ sup_login.form.as_p }}
+    <input type="submit" value='Save' />
+<a href="/supplier/password_reset">Forgot password?</a>
+</form>

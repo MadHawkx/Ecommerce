@@ -1,0 +1,17 @@
+<h1>Your Product History</h1>
+<table border="1px solid" align="center">
+    <tr align="center">
+        <th>price</th>
+        <th>quantity</th>
+        <th>date-time</th>
+    </tr>
+    {% for hs in obj %}
+    <tr align='center'>
+        <td>{{hs.price}}</td>
+        <td>{{hs.quantity}}</td>
+        <td>{{hs.datetime}}</td>
+
+    </tr>
+    {% endfor %}
+    </table>
+
