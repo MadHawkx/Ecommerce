@@ -6,5 +6,5 @@ class Payment(models.Model):
     txnid=models.CharField(max_length=50)
     mihpayid=models.CharField(max_length=20)
     amount=models.DecimalField(max_digits=9,decimal_places=2,default=0)
-    porder=models.OneToOneField(Order,blank=True, null=True, on_delete=models.RESTRICT,related_name='porder')
+    porder=models.OneToOneField(Order,blank=True, null=True, on_delete=models.DO_NOTHING,related_name='porder')
         
