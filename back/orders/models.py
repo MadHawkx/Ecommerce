@@ -33,7 +33,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(
         Order, related_name="orderitems", on_delete=models.CASCADE, blank=True, null=True)
     ordered = models.BooleanField(default=False)
-    item = models.ForeignKey(Product_Size_Color, on_delete=models.RESTRICT)
+    item = models.ForeignKey(Product_Size_Color, on_delete=models.DO_NOTHING)
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=9, decimal_places=2, default=0)
     discount = models.DecimalField(max_digits=9, decimal_places=2, default=0)
